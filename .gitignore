@@ -1,0 +1,10 @@
+# Arquivos originais preservados como cópia de segurança fora da estrutura ativa
+/assets/
+/index.html
+/projetos.html
+/cadastro.html
+
+# Arquivos locais de sistema e editor
+.DS_Store
+Thumbs.db
+.vscode/
