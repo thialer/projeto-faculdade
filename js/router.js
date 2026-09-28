@@ -11,7 +11,7 @@
     return routeNames.includes(route) ? route : 'home';
   }
 
-  function render(route) {
+  function render(route, shouldFocus = false) {
     const outlet = document.getElementById('app');
     const content = window.SITE_TEMPLATES[route] || window.SITE_TEMPLATES.home;
     outlet.innerHTML = content;
@@ -33,6 +33,7 @@
     }
 
     window.scrollTo(0, 0);
+    if (shouldFocus) outlet.focus({ preventScroll: true });
     window.dispatchEvent(new CustomEvent('spa:rendered', { detail: { route } }));
   }
 
@@ -42,12 +43,12 @@
     event.preventDefault();
     const route = link.dataset.route;
     if (route === currentRoute()) {
-      render(route);
+      render(route, true);
       return;
     }
     window.location.hash = '/' + route;
   });
 
-  window.addEventListener('hashchange', () => render(currentRoute()));
+  window.addEventListener('hashchange', () => render(currentRoute(), true));
   document.addEventListener('DOMContentLoaded', () => render(currentRoute()));
 })();
