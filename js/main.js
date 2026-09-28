@@ -30,6 +30,43 @@
     return checkDigit(cpf.slice(0, 9), 10) === Number(cpf[9]) && checkDigit(cpf.slice(0, 10), 11) === Number(cpf[10]);
   }
 
+  const themeKey = 'raizes-do-amanha:tema';
+  const themeButton = document.querySelector('.theme-toggle');
+  const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  let savedTheme = null;
+
+  try {
+    const preference = window.localStorage.getItem(themeKey);
+    if (preference === 'light' || preference === 'dark') savedTheme = preference;
+  } catch (error) {
+    // A preferência do sistema continua disponível se o armazenamento estiver bloqueado.
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    if (!themeButton) return;
+    const isDark = theme === 'dark';
+    themeButton.setAttribute('aria-pressed', String(isDark));
+    themeButton.querySelector('.theme-toggle-label').textContent = `Modo ${isDark ? 'escuro' : 'claro'}`;
+    themeButton.querySelector('.theme-toggle-icon').textContent = isDark ? '☀' : '☾';
+  }
+
+  applyTheme(savedTheme || (colorScheme.matches ? 'dark' : 'light'));
+  colorScheme.addEventListener('change', (event) => {
+    if (!savedTheme) applyTheme(event.matches ? 'dark' : 'light');
+  });
+
+  themeButton?.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    savedTheme = nextTheme;
+    applyTheme(nextTheme);
+    try {
+      window.localStorage.setItem(themeKey, nextTheme);
+    } catch (error) {
+      // O tema continua ativo até a página ser fechada, mesmo sem persistência.
+    }
+  });
+
   document.addEventListener('click', (event) => {
     const menuButton = event.target.closest('.menu-toggle');
     if (menuButton) {

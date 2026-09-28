@@ -28,6 +28,7 @@ js/         templates, navegação SPA, interações e armazenamento local
 - Cadastro com validação dos campos, máscara de telefone, CPF e CEP, e conferência dos dígitos do CPF.
 - Opção de salvar projetos favoritos neste navegador. O formulário não envia nem persiste dados pessoais.
 - Estados de feedback com badges, alertas, modal e toast.
+- Alternância entre tema claro e escuro, seguindo a preferência do sistema na primeira visita e guardando a escolha no `localStorage`.
 
 ## Organização do JavaScript
 
@@ -41,6 +42,8 @@ Os arquivos são carregados em sequência por `html/index.html`. O evento `spa:r
 ## Acessibilidade incluída
 
 A interface inclui idioma declarado em português, regiões de navegação identificadas, link para pular ao conteúdo, rótulos associados aos campos, mensagens de formulário anunciadas, foco visível e estados acessíveis nos controles. Após mudar de rota na SPA, o foco é direcionado ao conteúdo principal. Esses recursos são práticas implementadas no projeto; a conformidade completa com WCAG 2.1 AA depende de avaliação manual e com tecnologias assistivas.
+
+O botão de tema é identificado para leitores de ecrã e pode ser usado por teclado. A escolha entre tema claro e escuro é persistida no navegador; sem preferência salva, a aplicação segue a configuração de aparência do sistema.
 
 ## Versionamento
 
