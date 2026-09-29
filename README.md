@@ -1,16 +1,32 @@
 # Raízes do Amanhã
 
-Site demonstrativo de uma organização da sociedade civil, com páginas de apresentação, projetos e cadastro de voluntariado. A interface foi organizada como uma SPA simples, usando HTML, CSS e JavaScript sem dependências externas.
+Site demonstrativo de uma organização da sociedade civil, com páginas de apresentação, projetos e cadastro de voluntariado. A interface usa HTML, CSS e JavaScript sem dependências de execução; as ferramentas de build são usadas apenas para preparar a versão de produção.
 
-## Como abrir
+## Pré-requisitos
 
-Na pasta do projeto, inicie um servidor local. Por exemplo, com Python:
+- Node.js 18.17 ou superior e npm para gerar a versão de produção.
+- Python ou a extensão Live Server do Visual Studio Code para servir os arquivos localmente.
+
+## Instalação e execução local
+
+Na pasta do projeto, instale as ferramentas de build e gere os arquivos de produção:
 
 ```bash
-python -m http.server 8000
+npm ci
+npm run build
 ```
 
-Depois, abra `http://localhost:8000/html/` no navegador. Também é possível usar a extensão Live Server do Visual Studio Code apontando para `html/index.html`. Abrir o arquivo diretamente pelo explorador pode impedir o carregamento correto dos recursos.
+Para pré-visualizar a versão otimizada, sirva a pasta `docs`:
+
+```bash
+python -m http.server 8000 --directory docs
+```
+
+Abra `http://localhost:8000/` no navegador. Para desenvolvimento sem build, use o Live Server apontando para `html/index.html`. Abrir o arquivo diretamente pelo explorador pode impedir o carregamento correto dos recursos.
+
+## Build de produção
+
+O comando `npm run build` gera a versão pronta para publicação na pasta `docs/`. O processo minifica HTML, CSS e JavaScript, comprime as imagens JPEG e WebP e adapta os caminhos dos recursos para a publicação pelo GitHub Pages. A pasta `docs/` é o artefato de produção e deve acompanhar a branch de publicação.
 
 ## Estrutura
 
@@ -48,6 +64,10 @@ O botão de tema é identificado para leitores de ecrã e pode ser usado por tec
 ## Versionamento
 
 O projeto utiliza branches `main`, `develop` e `feature/ep4-gitflow`, com mensagens de commit no padrão Conventional Commits. As versões futuras podem seguir o formato SemVer (`MAJOR.MINOR.PATCH`). Ainda não há uma release formal ou tag publicada.
+
+## Publicação
+
+Após integrar a branch de funcionalidade em `main`, selecione no GitHub Pages a origem `Deploy from a branch`, branch `main` e pasta `/docs`. Cada atualização publicada deve incluir uma nova execução de `npm run build` e os arquivos atualizados de `docs/`.
 
 ## Limites atuais
 
